@@ -13,18 +13,16 @@
     </head>
     <body>
         <div id="formDiv">
-            <h1>FFP Sign Up</h1>
+            <h1>FFP Log In</h1>
             <div id="allRowDivs">
-                <form method="post" action="../../php/register.php">
-                    <div class="rowDiv"><h2>Username:</h2><input type="text" name="username" placeholder="John"></div>
-                    <div class="rowDiv"><h2>Email:</h2><input type="email" name="email" placeholder="johnnyappleseed@gmail.com"></div>
+                <form method="post" action="../../php/login.php">
+                    <div class="rowDiv"><h2>Username/Email:</h2><input type="text" name="email"></div>
                     <div class="rowDiv"><h2>Password:</h2><input type="password" name="password"></div>
-                    <div class="rowDiv"><h2>Confirm Password:</h2><input type="password" name="confirmpassword"></div>
-                    <button class="submitButton" type="submit" name="submit"><h2>Sign Up</h2></button>
+                    <button class="submitButton" type="submit" name="submit"><h2>Log In</h2></button>
                 </form>
             </div>
         </div>
     </body>
-
+    
     <?php include_once("../../php/basicFormStyles.php"); ?>
 </html>

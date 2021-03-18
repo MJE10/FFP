@@ -18,6 +18,7 @@
         <p>account</p>
 
         <a href="../signup"><p>Sign Up</p></a>
+        <a href="../login"><p>Log In</p></a>
     </body>
     <style>
         body {

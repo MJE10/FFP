@@ -30,7 +30,6 @@
     #pageLinks h2 {
         display: inline-block;
         margin: 13px 10px 5px 10px;
-        font-weight: normal;
         color: grey;
         text-decoration-line: underline;
     }
