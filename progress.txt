@@ -1,0 +1,9 @@
+3/17/21 day 1
+installed wordpress
+dont like wordpress login
+tried to make custom php
+realized this is gonna take some serious youtubing
+
+3/18/21 day 2
+decided to try building from scratch using resources from voitheia
+made full header, page files, sign up page layout
