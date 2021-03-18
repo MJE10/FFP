@@ -1,5 +1,41 @@
 <?php
     include_once("../../php/global.php");
+
+    include_once("../../php/dbc.php");
+    session_start();
+    
+    $msg = "";
+    
+    if (isset($_POST['submit'])) {
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $confirmPassword = $_POST['confirmPassword'];
+        if ($username == "") {
+            $msg = "Username cannot be empty!";
+        } else {
+            if ($_POST['password'] !== $_POST['confirmPassword']) {
+                $msg = "Passwords don't match!";
+            } else {
+                $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?;");
+                $stmt->bind_param("s", $email);
+                $email = $_POST['email'];
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if (mysqli_num_rows($result) > 0) {
+                    $msg = "Email taken!";
+                } else {
+                    $hash = password_hash($password, PASSWORD_DEFAULT);
+                    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?);");
+                    $stmt->bind_param("sss", $username, $email, $hash);
+                    $stmt->execute();
+                    
+                    $_SESSION['email'] = $email;
+                    header("Location: ../account");
+                }
+            }
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -14,12 +50,17 @@
     <body>
         <div id="formDiv">
             <h1>FFP Sign Up</h1>
+            <?php
+                if ($msg !== "") {
+                    echo "<h2>".$msg."</h2>";
+                }
+            ?>
             <div id="allRowDivs">
-                <form method="post" action="../../php/register.php">
+                <form method="post" action="index.php">
                     <div class="rowDiv"><h2>Username:</h2><input type="text" name="username" placeholder="John"></div>
                     <div class="rowDiv"><h2>Email:</h2><input type="email" name="email" placeholder="johnnyappleseed@gmail.com"></div>
                     <div class="rowDiv"><h2>Password:</h2><input type="password" name="password"></div>
-                    <div class="rowDiv"><h2>Confirm Password:</h2><input type="password" name="confirmpassword"></div>
+                    <div class="rowDiv"><h2>Confirm Password:</h2><input type="password" name="confirmPassword"></div>
                     <button class="submitButton" type="submit" name="submit"><h2>Sign Up</h2></button>
                 </form>
             </div>

@@ -1,5 +1,31 @@
 <?php
     include_once("../../php/global.php");
+
+    include_once("../../php/dbc.php");
+    session_start();
+    
+    $msg = "";
+    
+    if (isset($_POST['submit'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        
+        $stmt = $conn->prepare("SELECT * FROM users WHERE (email = ?) OR (username = ?);");
+        $stmt->bind_param("ss", $email, $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if (mysqli_num_rows($result) == 0) {
+            $msg = "Email/username not recognized!";
+        } else {
+            $row = mysqli_fetch_assoc($result);
+            if (password_verify($password, $row['password'])) {
+                $_SESSION['email'] = $row['email'];
+                header("Location: ../account");
+            } else {
+                $msg = "Wrong password!";
+            }
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -14,8 +40,13 @@
     <body>
         <div id="formDiv">
             <h1>FFP Log In</h1>
+            <?php
+                if ($msg !== "") {
+                    echo "<h2>".$msg."</h2>";
+                }
+            ?>
             <div id="allRowDivs">
-                <form method="post" action="../../php/login.php">
+                <form method="post" action="index.php">
                     <div class="rowDiv"><h2>Username/Email:</h2><input type="text" name="email"></div>
                     <div class="rowDiv"><h2>Password:</h2><input type="password" name="password"></div>
                     <button class="submitButton" type="submit" name="submit"><h2>Log In</h2></button>
