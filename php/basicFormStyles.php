@@ -2,56 +2,37 @@
 
         body {
             background-color: #49d188;
-            text-align: center;
-        }
-
-        #formDiv {
-            background-color: white;
-            border-radius: 8px;
-            display: inline-block;
-            padding: 10px;
-            margin-top: 20px;
         }
 
         h2, input {
-            display: block;
+            display: inline-block;
             margin: 7.5px 0px 7.5px 0px;
+            align-self: right;
         }
 
         input {
             width: 20em;
+            margin-left: 10px;
+            flex-shrink: 1;
+            min-width: 0;
         }
 
-        .submitButton {
-            padding: 8px;
-            border: 1px solid black;
-            border-radius: 2px;
+        .orangeButton {
             margin-top: 7.5px;
-        }
-
-        .submitButton h2 {
-            margin: 0;
         }
 
         #inputsDiv {
             margin-left: 10px;
         }
 
-        #allRowDivs {
+        .rowDiv {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: row;
+            max-width: 100%;
+            align-self: flex-end;
         }
 
         /* Portrait */
         @media screen and (orientation:landscape) {
-            .rowDiv * {
-                display: inline-block;
-                margin-left: 10px;
-            }
-            .rowDiv h2 {
-                width: 10em;
-                text-align: right;
-            }
         }
     </style>

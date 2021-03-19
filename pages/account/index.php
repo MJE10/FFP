@@ -1,5 +1,7 @@
 <?php
     include_once("../../php/global.php");
+    include_once("../../php/dbc.php");
+    include_once("../../php/header.php");
 ?>
 
 <!DOCTYPE html>
@@ -13,16 +15,33 @@
     </head>
     <body>
 
-        <?php include_once("../../php/header.php"); ?>
+        <div id="accountInfoDiv" class="shadowBoxClass">
 
-        <p>account</p>
+            <h1>My Profile</h1>
 
-        <a href="../signup"><p>Sign Up</p></a>
-        <a href="../login"><p>Log In</p></a>
+            <?php 
+                include_once('../../php/getUserDetails.php');
+
+                $username = $row['username'];
+                echo "<h2>Username: $username</h2><h2>Email: $email</h2>";
+                if ($row['verification'] === 'verified') echo "<h2>Email verified!</h2>";
+                else echo "<a href='../../php/sendNewVerificationCode.php'><button class='orangeButton'><h2>Verify Email</h2></button></a><br>";
+            ?>
+            
+
+            <a href="../../php/logout.php"><button class='orangeButton'><h2>Sign Out</h2></button></a>
+
+        </div>
     </body>
     <style>
-        body {
-            background-color: #49d188;
+
+        button {
+            margin-top: 7.5px;
         }
+
+        h2 {
+            margin: 5px;
+        }
+        
     </style>
 </html>

@@ -15,11 +15,10 @@
 
         <?php include_once("../../php/header.php"); ?>
 
-        <p>friends: none</p>
+        <div class="shadowBoxClass">
+            <h1>Friends coming soon!</h1>
+        </div>
     </body>
     <style>
-        body {
-            background-color: #f2e89b;
-        }
     </style>
 </html>

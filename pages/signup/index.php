@@ -26,11 +26,25 @@
                     $msg = "Email taken!";
                 } else {
                     $hash = password_hash($password, PASSWORD_DEFAULT);
-                    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?);");
-                    $stmt->bind_param("sss", $username, $email, $hash);
+
+                    $token = "";
+                    while (true) {
+                        $token = md5(uniqid(rand(), true));
+
+                        $stmt = $conn->prepare("SELECT * FROM users WHERE token = ?");
+                        $stmt->bind_param("s", $token);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        if (mysqli_num_rows($result) == 0) {
+                            break;
+                        }
+                    }
+
+                    $stmt = $conn->prepare("INSERT INTO users (username, email, password, token) VALUES (?, ?, ?, ?);");
+                    $stmt->bind_param("ssss", $username, $email, $hash, $token);
                     $stmt->execute();
                     
-                    $_SESSION['email'] = $email;
+                    $_SESSION['token'] = $token;
                     header("Location: ../account");
                 }
             }
@@ -48,23 +62,24 @@
 
     </head>
     <body>
-        <div id="formDiv">
-            <h1>FFP Sign Up</h1>
-            <?php
-                if ($msg !== "") {
-                    echo "<h2>".$msg."</h2>";
-                }
-            ?>
-            <div id="allRowDivs">
-                <form method="post" action="index.php">
-                    <div class="rowDiv"><h2>Username:</h2><input type="text" name="username" placeholder="John"></div>
-                    <div class="rowDiv"><h2>Email:</h2><input type="email" name="email" placeholder="johnnyappleseed@gmail.com"></div>
-                    <div class="rowDiv"><h2>Password:</h2><input type="password" name="password"></div>
-                    <div class="rowDiv"><h2>Confirm Password:</h2><input type="password" name="confirmPassword"></div>
-                    <button class="submitButton" type="submit" name="submit"><h2>Sign Up</h2></button>
-                </form>
+        <form method="post" action="index.php">
+            <div class="shadowBoxClass">
+                <h1>FFP Sign Up</h1>
+                <?php
+                    if ($msg !== "") {
+                        echo "<h2>".$msg."</h2>";
+                    }
+                ?>
+                    
+                <div class="rowDiv"><h2>Username:</h2><input type="text" name="username" placeholder="e.g. John"></div>
+                <div class="rowDiv"><h2>Email:</h2><input type="email" name="email" placeholder="e.g. johnnyappleseed@gmail.com"></div>
+                <div class="rowDiv"><h2>Password:</h2><input type="password" name="password"></div>
+                <div class="rowDiv"><h2>Confirm Password:</h2><input type="password" name="confirmPassword"></div>
+                
+                <button class="orangeButton" type="submit" name="submit"><h2>Sign Up</h2></button>    
+                <a href="../login"><button class="orangeButton"><h2>Log In</h2></button></a>
             </div>
-        </div>
+        </form>
     </body>
 
     <?php include_once("../../php/basicFormStyles.php"); ?>

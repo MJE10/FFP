@@ -15,11 +15,10 @@
 
         <?php include_once("../../php/header.php"); ?>
 
-        <p>tasks: none</p>
+        <div class="shadowBoxClass">
+            <h1>Tasks coming soon!</h1>
+        </div>
     </body>
     <style>
-        body {
-            background-color: #87afff;
-        }
     </style>
 </html>

@@ -8,3 +8,6 @@ realized this is gonna take some serious youtubing
 decided to try building from scratch using resources from voitheia
 made full header, page files, sign up/login page layout, form, & responsive design
 made signup/login functional
+added landing page with picture and buttons, somewhat responsive
+added token based security system
+implemented email verification
