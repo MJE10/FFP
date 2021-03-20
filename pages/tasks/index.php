@@ -82,7 +82,6 @@
                         </div>
                         <h2 class="taskNotes">'.$row['taskNotes'].'</h2>
                         <div class="taskButtons">
-                            <button class="orangeButton">Start</button>
                             <a href="../tasks?edit='.$row['identifier'].'"><button class="orangeButton">Edit</button></a>
                         </div>
                     </div><br>
