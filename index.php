@@ -1,5 +1,13 @@
 <?php
     include_once("php/global.php");
+
+    if (isset($_COOKIE['loginToken'])) {
+        $_SESSION['token'] = $_COOKIE['loginToken'];
+        include_once('php/checkLoggedIn.php');
+        if ($logged_in) {
+            header("Location: pages/account");
+        }
+    }
 ?>
 
 <!DOCTYPE html>

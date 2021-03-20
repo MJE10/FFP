@@ -40,6 +40,7 @@
                 // echo 'oi';
 
                 $_SESSION['token'] = $token;
+                setcookie("loginToken", $token, time() + (86400 * 30), "/");
                 header("Location: ../account");
             } else {
                 $msg = "Wrong password!";

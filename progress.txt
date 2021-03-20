@@ -11,3 +11,12 @@ made signup/login functional
 added landing page with picture and buttons, somewhat responsive
 added token based security system
 implemented email verification
+
+3/19/21 day 3
+changed styling, removed multiple colors, adjusted font weights
+made buttons fun again
+changed the way shadow boxes work
+added task functionality: display, creation, deletion, editing, with security.
+
+3/20/21 day 4
+implemented basic login cookies, but they don't work exactly as intended

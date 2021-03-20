@@ -45,6 +45,7 @@
                     $stmt->execute();
                     
                     $_SESSION['token'] = $token;
+                    setcookie("loginToken", $token, time() + (86400 * 30), "/");
                     header("Location: ../account");
                 }
             }
@@ -77,7 +78,7 @@
                 <div class="rowDiv"><h2>Confirm Password:</h2><input type="password" name="confirmPassword"></div>
                 
                 <button class="orangeButton" type="submit" name="submit"><h2>Sign Up</h2></button>    
-                <a href="../login"><button class="orangeButton"><h2>Log In</h2></button></a>
+                <a href="../login"><button type="button" class="orangeButton"><h2>Log In</h2></button></a>
             </div>
         </form>
     </body>
