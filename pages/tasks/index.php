@@ -66,8 +66,8 @@
                             <textarea name="taskNotes" class="taskNotes">'.$row['taskNotes'].'</textarea>
                             <div class="taskButtons">
                                 <button class="orangeButton">Save</button>
-                                <a href="../tasks"><button class="orangeButton">Cancel</button></a>
-                                <a href="../../php/deleteTask.php?id='.$row['identifier'].'"><button class="orangeButton">Delete</button></a>
+                                <a href="../tasks"><button type="button" class="orangeButton">Cancel</button></a>
+                                <a href="../../php/deleteTask.php?id='.$row['identifier'].'"><button type="button" class="orangeButton">Delete</button></a>
                             </div>
                         </form>
                     </div><br>
