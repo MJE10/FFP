@@ -15,7 +15,12 @@
 
         <?php include_once("../../php/header.php"); ?>
 
-        <a href="../../php/createNewTask.php"><button id="createTaskButton" class="orangeButton">Add Task</button></a><br>
+        <a href="../../php/createNewTask.php"><button id="createTaskButton" class="orangeButton">Add Task</button></a>
+        <?php
+            if (isset($_SESSION['showDone']) and $_SESSION['showDone'] == 1) echo '<a href="toggleShowDone.php"><button id="showDoneButton" class="orangeButton">Hide Completed</button></a><br>';
+            else echo '<a href="toggleShowDone.php"><button id="showDoneButton" class="orangeButton">Show Completed</button></a><br>';
+        ?>
+        
 
         <!--<div class="shadowBoxClass">
             <div class="taskInfo">
@@ -53,6 +58,15 @@
             $stmt->execute();
             $result = $stmt->get_result();
             while ($row = mysqli_fetch_array($result)) {
+
+                $status = "Not Started";
+                $markDoneButton = '<a href="markDone.php?id='.$row['identifier'].'"><button class="orangeButton">Mark Done</button></a>
+                                   <a href="../tasks?edit='.$row['identifier'].'"><button class="orangeButton">Edit</button></a>';
+                if ($row['status'] == 2) {
+                    $status = "Completed";
+                    $markDoneButton = "";
+                }
+
                 if (isset($_GET['edit']) and $_GET['edit'] == $row['identifier']) {
                     echo '
                     <div class="shadowBoxClass">
@@ -62,6 +76,7 @@
                                 <div><h2>Task Name:</h2><input type="text" name="taskName" class="taskNameEdit" value="'.$row['taskName'].'"></div>
                                 <div><h2>Time (hours):</h2><input type="text" name="taskTime" class="taskTimeEdit" value="'.$row['taskTime'].'"></div>
                                 <div><h2>Difficulty (out of 10):</h2><input type="text" name="taskDifficulty" class="taskDifficultyEdit" value="'.$row['taskDifficulty'].'"></div>
+                                <div><h2>Status: '.$status.'</h2></div>
                             </div>
                             <textarea name="taskNotes" class="taskNotes">'.$row['taskNotes'].'</textarea>
                             <div class="taskButtons">
@@ -72,17 +87,18 @@
                         </form>
                     </div><br>
                     ';
-                } else {
+                } else if ($row['status'] == 0 or (isset($_SESSION['showDone']) and $_SESSION['showDone'] == 1 and $row['status'] == 2)) {
                     echo '
                     <div class="shadowBoxClass" id="taskDiv_'.$row['id'].'">
                         <div class="taskInfo">
                             <h1 class="taskName">'.$row['taskName'].'</h1>
                             <h2 class="taskTime">Time: '.$row['taskTime'].'</h2>
                             <h2 class="taskDifficulty">Difficulty: '.$row['taskDifficulty'].'</h2>
+                            <h2 class="taskStatus">Status: '.$status.'</h2>
                         </div>
                         <h2 class="taskNotes">'.$row['taskNotes'].'</h2>
                         <div class="taskButtons">
-                            <a href="../tasks?edit='.$row['identifier'].'"><button class="orangeButton">Edit</button></a>
+                            '.$markDoneButton.'
                         </div>
                     </div><br>
                     ';
@@ -117,6 +133,12 @@
         }
 
         .taskDifficulty {
+            display: inline;
+            padding: 5px 10px 0 10px;
+            border-right: 1px solid grey;
+        }
+
+        .taskStatus {
             display: inline;
             padding: 5px 0 0 10px;
         }
